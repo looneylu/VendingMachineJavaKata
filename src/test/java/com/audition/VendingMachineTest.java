@@ -145,7 +145,20 @@ public class VendingMachineTest {
 		vendingMachine.insertCoin(Coin.QUARTER);
 		
 		
-		assertTrue(vendingMachine.vendCandy());
-		
+		assertTrue(vendingMachine.vendCandy());	
 	}
+	
+	@Test
+	public void vendingDisplayWhenMoreCoinsNeeded(){
+		productHandler.setInventory(Product.CANDY, 10);
+		vendingMachine.setProductHandler(productHandler);
+		
+		vendingMachine.insertCoin(Coin.QUARTER);
+		
+		vendingMachine.vendCandy();
+		
+		assertEquals("INSERT COIN", vendingMachine.getDisplayString());
+	}
+	
+	
 }
