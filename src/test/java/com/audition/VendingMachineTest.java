@@ -9,15 +9,18 @@ import org.junit.Test;
 public class VendingMachineTest {
 
 	private VendingMachine vendingMachine;
+	private ProductHandler productHandler;
 	
 	@Before
 	public void setUp() throws Exception {
 		vendingMachine = new VendingMachine();
+		productHandler = new ProductHandler();
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		vendingMachine = null;
+		productHandler = null;
 	}
 
 	@Test
@@ -74,6 +77,24 @@ public class VendingMachineTest {
 		assertEquals("INSERT COIN", vendingMachine.getDisplayString());
 		assertEquals(0, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
 	}
+	
+	@Test
+	public void machineIsAbleToSetInventory(){
+		Product colaProduct = Product.COLA;
+		Product chipsProduct = Product.CHIPS;
+		Product candyProduct = Product.CANDY;
+		
+		productHandler.setInventory(candyProduct, 10);
+		productHandler.setInventory(chipsProduct, 10);
+		productHandler.setInventory(colaProduct, 10);
+		
+		vendingMachine.setProductHandler(productHandler);
+		
+		assertTrue(vendingMachine.getProductHandler().getInventory().get(Product.CANDY) == 10);
+		assertTrue(vendingMachine.getProductHandler().getInventory().get(Product.COLA) == 10);
+		assertTrue(vendingMachine.getProductHandler().getInventory().get(Product.CHIPS) == 10);	
+	}
+	
 	
 
 }

@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 public class VendingMachine {
 	private CoinHandler coinHandler = new CoinHandler();
+	private ProductHandler productHandler = new ProductHandler();
 	private String displayString = "INSERT COIN"; 
 
 	public double insertCoin(Coin coin){
@@ -28,6 +29,14 @@ public class VendingMachine {
 
 	public void setDisplayString(String displayString) {
 		this.displayString = displayString;
+	}
+		
+	public ProductHandler getProductHandler() {
+		return productHandler;
+	}
+
+	public void setProductHandler(ProductHandler productHandler) {
+		this.productHandler = productHandler;
 	}
 	
 	private void setStringToDisplayAfterCoinInsert() {
