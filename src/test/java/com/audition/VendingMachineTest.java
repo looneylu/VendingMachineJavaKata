@@ -68,5 +68,12 @@ public class VendingMachineTest {
 		assertEquals(".15", vendingMachine.getDisplayString());
 		assertEquals(1, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
 	}
+	
+	@Test
+	public void displayValueWhenMachineHasNoMoney(){
+		assertEquals("INSERT COIN", vendingMachine.getDisplayString());
+		assertEquals(0, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
+	}
+	
 
 }
