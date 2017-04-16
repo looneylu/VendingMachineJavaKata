@@ -15,6 +15,10 @@ public class CoinHandler {
 	public double getTotalValueOfCoinsInserted() {
 		return totalValueOfCoinsInserted;
 	}
+	
+	public void acceptTrasaction(){
+		totalValueOfCoinsInserted = 0.00;
+	}
 
 	public void setTotalValueOfCoinsInserted(double totalValueOfCoinsInserted) {
 		this.totalValueOfCoinsInserted += totalValueOfCoinsInserted;

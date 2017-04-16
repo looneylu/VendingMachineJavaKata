@@ -77,6 +77,7 @@ public class VendingMachine {
 		}else{
 			if (vendProduct(product)){
 				setDisplayString("THANK YOU");
+				getCoinHandler().acceptTrasaction();
 				return true;
 			} else{
 				setDisplayString("SOLD OUT");

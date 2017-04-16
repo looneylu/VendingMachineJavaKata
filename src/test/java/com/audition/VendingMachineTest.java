@@ -188,4 +188,19 @@ public class VendingMachineTest {
 		
 		assertTrue(amountOfProduct == 0);
 	}
+	
+	@Test
+	public void acceptedCoinsResetWithValidVend(){
+		productHandler.setInventory(Product.CANDY, 1);
+		vendingMachine.setProductHandler(productHandler);
+		
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		
+		vendingMachine.vendCandy();
+
+		assertEquals(0, vendingMachine.getCoinHandler().getTotalValueOfCoinsInserted(), .001);
+		
+	}
 }
