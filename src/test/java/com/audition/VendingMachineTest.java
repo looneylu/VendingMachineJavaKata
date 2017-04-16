@@ -217,6 +217,32 @@ public class VendingMachineTest {
 		assertEquals(.10, vendingMachine.getCoinReturn(), .001);
 	}
 	
+	@Test
+	public void coinReturnWhenUserCancelsTransaction(){
+		productHandler.setInventory(Product.CANDY, 1);
+		vendingMachine.setProductHandler(productHandler);
+		
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		
+		vendingMachine.cancelVend();
+		
+		assertEquals(.75, vendingMachine.getCoinReturn(), .001);
+	}	
 	
+	@Test
+	public void displaysSoldOutWhenOutOfInventory(){
+		productHandler.setInventory(Product.CANDY, 0);
+		vendingMachine.setProductHandler(productHandler);
+		
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		
+		vendingMachine.vendCandy();
+		
+		assertEquals("SOLD OUT", vendingMachine.getDisplayString());
+	}
 	
 }

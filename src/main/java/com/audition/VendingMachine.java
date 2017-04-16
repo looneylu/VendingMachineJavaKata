@@ -30,6 +30,14 @@ public class VendingMachine {
 		return vendResult(Product.CANDY);
 	}
 	
+	public double cancelVend(){
+		setCoinReturn(getCoinHandler().returnCoins(0));
+		getCoinHandler().acceptTrasaction();
+		
+		return getCoinReturn();
+		
+	}
+	
 	public CoinHandler getCoinHandler() {
 		return coinHandler;
 	}
