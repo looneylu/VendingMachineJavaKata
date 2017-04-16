@@ -160,5 +160,17 @@ public class VendingMachineTest {
 		assertEquals("INSERT COIN", vendingMachine.getDisplayString());
 	}
 	
-	
+	@Test
+	public void vendingDisplayWhenSoldOut(){
+		productHandler.setInventory(Product.CANDY, 0);
+		vendingMachine.setProductHandler(productHandler);
+		
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		
+		vendingMachine.vendCandy();
+		
+		assertEquals("SOLD OUT", vendingMachine.getDisplayString());
+	}
 }
