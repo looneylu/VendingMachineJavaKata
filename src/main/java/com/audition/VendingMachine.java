@@ -15,6 +15,19 @@ public class VendingMachine {
 		return getCoinHandler().getTotalValueOfCoinsInserted();
 	}
 	
+	public Boolean vendCola(){
+		
+		return vendResult(Product.COLA);
+	}
+	
+	public Boolean vendChips(){
+		return vendResult(Product.CHIPS);
+	}
+	
+	public Boolean vendCandy(){
+		return vendResult(Product.CANDY);
+	}
+	
 	public CoinHandler getCoinHandler() {
 		return coinHandler;
 	}
@@ -47,6 +60,29 @@ public class VendingMachine {
 		} else{ 
 			setDisplayString("INSERT COIN");
 		}
+	}
+	
+	private Boolean vendProduct(Product product) {
+		double moneyInserted = getCoinHandler().getTotalValueOfCoinsInserted();
+		
+		if(moneyInserted >= product.getProductValue() && getProductHandler().vendProduct(product)){
+			return true;
+		}
+		return false;
+	}
+	
+	private Boolean vendResult(Product product) {
+		if (getCoinHandler().getTotalValueOfCoinsInserted() < product.getProductValue()){
+			setDisplayString("INSERT COIN");
+		}else{
+			if (vendProduct(product)){
+				setDisplayString("THANK YOU");
+				return true;
+			} else{
+				setDisplayString("SOLD OUT");
+			}
+		}
+		return false;
 	}
 	
 }

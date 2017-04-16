@@ -95,6 +95,57 @@ public class VendingMachineTest {
 		assertTrue(vendingMachine.getProductHandler().getInventory().get(Product.CHIPS) == 10);	
 	}
 	
-	
+	@Test
+	public void colaFailsVendWithInventoryAndNoMoney(){
+		productHandler.setInventory(Product.COLA, 10);
+		vendingMachine.setProductHandler(productHandler);
+		
+		assertFalse(vendingMachine.vendCola());
+		
+	}
 
+	@Test
+	public void colaVendWithInventory(){
+		productHandler.setInventory(Product.COLA, 10);
+		vendingMachine.setProductHandler(productHandler);
+		
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		
+		
+		assertTrue(vendingMachine.vendCola());
+		
+	}
+	
+	@Test
+	public void chipsVendWithInventory(){
+		productHandler.setInventory(Product.CHIPS, 10);
+		vendingMachine.setProductHandler(productHandler);
+		
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		
+		
+		assertTrue(vendingMachine.vendChips());
+		
+	}
+	
+	@Test
+	public void candyVendWithInventory(){
+		productHandler.setInventory(Product.CANDY, 10);
+		vendingMachine.setProductHandler(productHandler);
+		
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		
+		
+		assertTrue(vendingMachine.vendCandy());
+		
+	}
 }
