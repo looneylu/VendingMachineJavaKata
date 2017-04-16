@@ -54,5 +54,19 @@ public class VendingMachineTest {
 		
 		assertEquals(3, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
 	}
+	
+	@Test
+	public void displayValueWhenMachineHasMoney(){
+		Coin myCoin1 = Coin.NICKEL;
+		Coin myCoin2 = Coin.DIME;
+		Coin myCoin3 = Coin.PENNY;
+		
+		vendingMachine.insertCoin(myCoin1);
+		vendingMachine.insertCoin(myCoin2);
+		vendingMachine.insertCoin(myCoin3);
+		
+		assertEquals(".15", vendingMachine.getDisplayString());
+		assertEquals(1, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
+	}
 
 }
