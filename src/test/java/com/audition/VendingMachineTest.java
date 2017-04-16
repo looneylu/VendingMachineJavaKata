@@ -22,7 +22,17 @@ public class VendingMachineTest {
 
 	@Test
 	public void testCoinInsert() {
-		fail("Not yet implemented");
+		Coin myCoin1 = Coin.NICKEL;
+		Coin myCoin2 = Coin.DIME;
+		Coin myCoin3 = Coin.PENNY;
+		
+		vendingMachine.insertCoin(myCoin1);
+		vendingMachine.insertCoin(myCoin2);
+		vendingMachine.insertCoin(myCoin3);
+			
+		assertEquals(.15, vendingMachine.getCoinHandler().getTotalValueOfCoinsInserted(), .001);
+		assertEquals(1, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
 	}
+	
 
 }
