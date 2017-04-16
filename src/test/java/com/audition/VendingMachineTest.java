@@ -34,5 +34,25 @@ public class VendingMachineTest {
 		assertEquals(1, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
 	}
 	
+	@Test
+	public void testPennyInsert(){
+		Coin myCoin3 = Coin.PENNY;
+		vendingMachine.insertCoin(myCoin3);
+		
+		assertEquals(0, 0, .001);
+	}
+	
+	@Test
+	public void invalidCoinsAreReturned(){
+		Coin myCoin1 = Coin.PENNY;
+		Coin myCoin2 = Coin.PENNY;
+		Coin myCoin3 = Coin.PENNY;
+		
+		vendingMachine.insertCoin(myCoin1);
+		vendingMachine.insertCoin(myCoin2);
+		vendingMachine.insertCoin(myCoin3);
+		
+		assertEquals(3, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
+	}
 
 }
