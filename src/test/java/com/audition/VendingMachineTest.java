@@ -200,7 +200,23 @@ public class VendingMachineTest {
 		
 		vendingMachine.vendCandy();
 
-		assertEquals(0, vendingMachine.getCoinHandler().getTotalValueOfCoinsInserted(), .001);
-		
+		assertEquals(0, vendingMachine.getCoinHandler().getTotalValueOfCoinsInserted(), .001);	
 	}
+	
+	@Test
+	public void coinReturnAfterValidTransaction(){
+		productHandler.setInventory(Product.CANDY, 1);
+		vendingMachine.setProductHandler(productHandler);
+		
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		
+		vendingMachine.vendCandy();
+		
+		assertEquals(.10, vendingMachine.getCoinReturn(), .001);
+	}
+	
+	
+	
 }

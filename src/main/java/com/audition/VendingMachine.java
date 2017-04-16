@@ -6,6 +6,8 @@ public class VendingMachine {
 	private CoinHandler coinHandler = new CoinHandler();
 	private ProductHandler productHandler = new ProductHandler();
 	private String displayString = "INSERT COIN"; 
+	private double coinReturn = 0;
+
 
 	public double insertCoin(Coin coin){
 		
@@ -52,6 +54,14 @@ public class VendingMachine {
 		this.productHandler = productHandler;
 	}
 	
+	public double getCoinReturn() {
+		return coinReturn;
+	}
+
+	public void setCoinReturn(double coinReturn) {
+		this.coinReturn = coinReturn;
+	}
+	
 	private void setStringToDisplayAfterCoinInsert() {
 		DecimalFormat doubleToFormat = new DecimalFormat(".##");
 		
@@ -77,6 +87,7 @@ public class VendingMachine {
 		}else{
 			if (vendProduct(product)){
 				setDisplayString("THANK YOU");
+				setCoinReturn(getCoinHandler().returnCoins(product.getProductValue()));
 				getCoinHandler().acceptTrasaction();
 				return true;
 			} else{
@@ -85,5 +96,6 @@ public class VendingMachine {
 		}
 		return false;
 	}
+	
 	
 }

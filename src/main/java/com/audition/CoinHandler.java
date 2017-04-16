@@ -23,6 +23,13 @@ public class CoinHandler {
 	public void setTotalValueOfCoinsInserted(double totalValueOfCoinsInserted) {
 		this.totalValueOfCoinsInserted += totalValueOfCoinsInserted;
 	}
+	
+	public double returnCoins(double transactionCost){
+		if (totalValueOfCoinsInserted > transactionCost){
+			return totalValueOfCoinsInserted - transactionCost;
+		}
+		return 0;
+	}
 
 	public int getNumberOfInvalidCoinsReturned() {
 		return numberOfInvalidCoinsReturned;
