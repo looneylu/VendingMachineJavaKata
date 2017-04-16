@@ -173,4 +173,19 @@ public class VendingMachineTest {
 		
 		assertEquals("SOLD OUT", vendingMachine.getDisplayString());
 	}
+	
+	@Test
+	public void inventoryDecreasesWithSuccessfulVend(){
+		productHandler.setInventory(Product.CANDY, 1);
+		vendingMachine.setProductHandler(productHandler);
+		
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		vendingMachine.insertCoin(Coin.QUARTER);
+		
+		vendingMachine.vendCandy();
+		Integer amountOfProduct = vendingMachine.getProductHandler().getInventory().get(Product.CANDY);
+		
+		assertTrue(amountOfProduct == 0);
+	}
 }
