@@ -1,7 +1,6 @@
 package com.audition;
 
 import java.text.DecimalFormat;
-
 import com.audition.coin.CoinHandler;
 import com.audition.coin.Coin;
 import com.audition.product.Product;
@@ -41,12 +40,13 @@ public class VendingMachine {
 		return getCoinReturn();
 	}
 
-	public CoinHandler getCoinHandler(){
+	
+	public CoinHandler getCoinHandler() {
 		return coinHandler;
 	}
-	
-	public void setCoinHandler(CoinHandler aCoinHandler){
-		this.coinHandler = aCoinHandler;
+
+	public void setCoinHandler(CoinHandler coinHandler) {
+		this.coinHandler = coinHandler;
 	}
 
 	public String getDisplayString() {
@@ -56,11 +56,10 @@ public class VendingMachine {
 	public void setDisplayString(String displayString) {
 		this.displayString = displayString;
 	}
-	
+
 	public ProductHandler getProductHandler() {
 		return productHandler;
 	}
-
 
 	public void setProductHandler(ProductHandler productHandler) {
 		this.productHandler = productHandler;

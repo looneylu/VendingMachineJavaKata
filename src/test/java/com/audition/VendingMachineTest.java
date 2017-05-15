@@ -11,23 +11,38 @@ import com.audition.coin.CoinHandler;
 import com.audition.product.Product;
 import com.audition.product.ProductHandler;
 
+
 public class VendingMachineTest {
 
 	private VendingMachine vendingMachine;
 	private ProductHandler productHandler;
 	
 	@Before
-	public void setup(){
+	public void setup() throws Exception{
 		vendingMachine = new VendingMachine();
 		productHandler = new ProductHandler();	
 		
 		vendingMachine.setCoinHandler(new CoinHandler());
 	}
-	
+
 	@After
-	public void tearDown(){
+	public void tearDown() throws Exception {
 		vendingMachine = null;
 		productHandler = null;
+	}
+
+	@Test
+	public void testCoinInsert() {
+		USCoin myCoin1 = USCoin.NICKEL;
+		USCoin myCoin2 = USCoin.DIME;
+		USCoin myCoin3 = USCoin.PENNY;
+		
+		vendingMachine.insertCoin(myCoin1);
+		vendingMachine.insertCoin(myCoin2);
+		vendingMachine.insertCoin(myCoin3);
+			
+		assertEquals(.15, vendingMachine.getCoinHandler().getTotalValueOfCoinsInserted(), .001);
+		assertEquals(1, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
 	}
 	
 	@Test
@@ -44,21 +59,11 @@ public class VendingMachineTest {
 		USCoin myCoin2 = USCoin.PENNY;
 		USCoin myCoin3 = USCoin.PENNY;
 		
-		insertCoinsForInsertTest(myCoin1, myCoin2, myCoin3);
+		vendingMachine.insertCoin(myCoin1);
+		vendingMachine.insertCoin(myCoin2);
+		vendingMachine.insertCoin(myCoin3);
 		
 		assertEquals(3, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
-	}
-	
-	@Test
-	public void testCoinInsert() {
-		USCoin myCoin1 = USCoin.NICKEL;
-		USCoin myCoin2 = USCoin.DIME;
-		USCoin myCoin3 = USCoin.PENNY;
-		
-		insertCoinsForInsertTest(myCoin1, myCoin2, myCoin3);
-			
-		assertEquals(.15, vendingMachine.getCoinHandler().getTotalValueOfCoinsInserted(), .001);
-		assertEquals(1, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
 	}
 	
 	@Test
@@ -67,7 +72,9 @@ public class VendingMachineTest {
 		USCoin myCoin2 = USCoin.DIME;
 		USCoin myCoin3 = USCoin.PENNY;
 		
-		insertCoinsForInsertTest(myCoin1, myCoin2, myCoin3);
+		vendingMachine.insertCoin(myCoin1);
+		vendingMachine.insertCoin(myCoin2);
+		vendingMachine.insertCoin(myCoin3);
 		
 		assertEquals(".15", vendingMachine.getDisplayString());
 		assertEquals(1, vendingMachine.getCoinHandler().getNumberOfInvalidCoinsReturned());
@@ -95,7 +102,7 @@ public class VendingMachineTest {
 		assertTrue(vendingMachine.getProductHandler().getInventory().get(Product.COLA) == 10);
 		assertTrue(vendingMachine.getProductHandler().getInventory().get(Product.CHIPS) == 10);	
 	}
-
+	
 	@Test
 	public void colaFailsVendWithInventoryAndNoMoney(){
 		productHandler.setInventory(Product.COLA, 10);
@@ -104,27 +111,19 @@ public class VendingMachineTest {
 		assertFalse(vendingMachine.vendCola());
 		
 	}
-	
+
 	@Test
 	public void colaVendWithInventory(){
 		productHandler.setInventory(Product.COLA, 10);
 		vendingMachine.setProductHandler(productHandler);
 		
-		insertFourQuartersIntoVendingMachine();		
-		
-		assertTrue(vendingMachine.vendCola());
-		
-	}
-	
-	@Test
-	public void colaVendWithNoInventory(){
-		productHandler.setInventory(Product.COLA, 1);
-		vendingMachine.setProductHandler(productHandler);
-		
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
 		vendingMachine.insertCoin(USCoin.QUARTER);
 		
 		
-		assertFalse(vendingMachine.vendCola());
+		assertTrue(vendingMachine.vendCola());
 		
 	}
 	
@@ -133,7 +132,10 @@ public class VendingMachineTest {
 		productHandler.setInventory(Product.CHIPS, 10);
 		vendingMachine.setProductHandler(productHandler);
 		
-		insertFourQuartersIntoVendingMachine();
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
 		
 		
 		assertTrue(vendingMachine.vendChips());
@@ -145,23 +147,13 @@ public class VendingMachineTest {
 		productHandler.setInventory(Product.CANDY, 10);
 		vendingMachine.setProductHandler(productHandler);
 		
-		insertFourQuartersIntoVendingMachine();
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
 		
 		
-		assertTrue(vendingMachine.vendCandy());
-		
-	}
-	
-	@Test
-	public void vendingDisplayWithEnoughCoins(){
-		productHandler.setInventory(Product.CANDY, 10);
-		vendingMachine.setProductHandler(productHandler);
-		
-		insertFourQuartersIntoVendingMachine();
-		
-		vendingMachine.vendCandy();
-		
-		assertEquals("THANK YOU", vendingMachine.getDisplayString());
+		assertTrue(vendingMachine.vendCandy());	
 	}
 	
 	@Test
@@ -181,7 +173,9 @@ public class VendingMachineTest {
 		productHandler.setInventory(Product.CANDY, 0);
 		vendingMachine.setProductHandler(productHandler);
 		
-		insertThreeQuartersIntoVeningMachine();
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
 		
 		vendingMachine.vendCandy();
 		
@@ -193,7 +187,9 @@ public class VendingMachineTest {
 		productHandler.setInventory(Product.CANDY, 1);
 		vendingMachine.setProductHandler(productHandler);
 		
-		insertThreeQuartersIntoVeningMachine();
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
 		
 		vendingMachine.vendCandy();
 		Integer amountOfProduct = vendingMachine.getProductHandler().getInventory().get(Product.CANDY);
@@ -206,12 +202,13 @@ public class VendingMachineTest {
 		productHandler.setInventory(Product.CANDY, 1);
 		vendingMachine.setProductHandler(productHandler);
 		
-		insertThreeQuartersIntoVeningMachine();
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
 		
 		vendingMachine.vendCandy();
 
-		assertEquals(0, vendingMachine.getCoinHandler().getTotalValueOfCoinsInserted(), .001);
-		
+		assertEquals(0, vendingMachine.getCoinHandler().getTotalValueOfCoinsInserted(), .001);	
 	}
 	
 	@Test
@@ -219,7 +216,9 @@ public class VendingMachineTest {
 		productHandler.setInventory(Product.CANDY, 1);
 		vendingMachine.setProductHandler(productHandler);
 		
-		insertThreeQuartersIntoVeningMachine();
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
 		
 		vendingMachine.vendCandy();
 		
@@ -231,28 +230,27 @@ public class VendingMachineTest {
 		productHandler.setInventory(Product.CANDY, 1);
 		vendingMachine.setProductHandler(productHandler);
 		
-		insertThreeQuartersIntoVeningMachine();
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
 		
 		vendingMachine.cancelVend();
 		
 		assertEquals(.75, vendingMachine.getCoinReturn(), .001);
+	}	
+	
+	@Test
+	public void displaysSoldOutWhenOutOfInventory(){
+		productHandler.setInventory(Product.CANDY, 0);
+		vendingMachine.setProductHandler(productHandler);
+		
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		vendingMachine.insertCoin(USCoin.QUARTER);
+		
+		vendingMachine.vendCandy();
+		
+		assertEquals("SOLD OUT", vendingMachine.getDisplayString());
 	}
 	
-	private void insertCoinsForInsertTest(USCoin myCoin1, USCoin myCoin2, USCoin myCoin3) {
-		vendingMachine.insertCoin(myCoin1);
-		vendingMachine.insertCoin(myCoin2);
-		vendingMachine.insertCoin(myCoin3);
-	}
-	
-	private void insertFourQuartersIntoVendingMachine() {
-		insertThreeQuartersIntoVeningMachine();
-		vendingMachine.insertCoin(USCoin.QUARTER);
-	}
-	
-	private void insertThreeQuartersIntoVeningMachine() {
-		vendingMachine.insertCoin(USCoin.QUARTER);
-		vendingMachine.insertCoin(USCoin.QUARTER);
-		vendingMachine.insertCoin(USCoin.QUARTER);
-	}
-
 }
